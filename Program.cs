@@ -7,9 +7,9 @@ void PrintArray(int[,] collection)
     {
         for (int j = 0; j < collection.GetLength(1); j++)
         {
-            Console.Write(collection[i,j] + " ");
+            Console.Write(collection[i, j] + " ");
         }
-        Console.WriteLine();   
+        Console.WriteLine();
     }
 }
 
@@ -19,52 +19,55 @@ void FillArray(int[,] collection)
     {
         for (int j = 0; j < collection.GetLength(1); j++)
         {
-            collection[i,j] = new Random().Next(-99,100);
-            
+            collection[i, j] = new Random().Next(-99, 100);
+
         }
     }
 }
 
-void DeleteTargetPrintResult(int[,] collection)
+void DeleteTarget(int[,] collection, int[,] collection2)
 {
     int x = 0;
     int y = 0;
-    int min = collection[0,0];
+    int min = collection[0, 0];
     for (int i = 0; i < collection.GetLength(0); i++)
     {
         for (int j = 0; j < collection.GetLength(1); j++)
         {
-            if (collection[i,j] < min)
+            if (collection[i, j] < min)
             {
-                min = collection[i,j];
+                min = collection[i, j];
                 x = j;
                 y = i;
             }
         }
     }
     Console.WriteLine(min + " " + x + " " + y);
-    Console.WriteLine("_______________");
 
+    int countX = 0;
+    int countY = 0;
     for (int k = 0; k < collection.GetLength(0); k++)
     {
         for (int l = 0; l < collection.GetLength(1); l++)
         {
-            if (k != y)
+            if (k != y && l != x)
             {
-                if (l != x)
-                {
-                    Console.Write(collection[k,l] + " ");
-                }
+                collection2[countY, countX] = collection[k, l];
+                countX++;
             }
         }
-        if (k != y) Console.WriteLine();
+        countX = 0;
+        if (k != y) countY++;
     }
 }
 
 int m = 4, n = 4;
-int[,] array = new int[m,n];
+int[,] array = new int[m, n];
+int[,] newArray = new int[array.GetLength(0) - 1, array.GetLength(1) - 1];
 
 FillArray(array);
 PrintArray(array);
 Console.WriteLine("_______________");
-DeleteTargetPrintResult(array);
+DeleteTarget(array, newArray);
+Console.WriteLine("_______________");
+PrintArray(newArray);
